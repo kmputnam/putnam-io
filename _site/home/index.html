@@ -3,7 +3,7 @@
   <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width,initial-scale=1" />
-	<title>{{ title }}</title>
+	<title></title>
 	<style>
 	  body {
 		margin: 0;
@@ -46,18 +46,28 @@
 	<header>
 	  <div class="header-right">
 		<ul>
-		  <li><a href="/">Home</a></li>
-		  <li><a href="/blog.html">Blog</a></li>
-		  <li><a href="https://github.com/kmputnam">Code</a></li>
-		  <li><a href="/contact/">Contact</a></li>
+		  <li><a href="/">home</a></li>
+		  <li><a href="/blog/">blog</a></li>
+		  <li><a href="https://github.com/kmputnam">code</a></li>
+		  <li><a href="/contact/">contact</a></li>
 		</ul>
 	  </div>
 	</header>
 
-	{% block content %}{% endblock %}
+	
+  <div class="hero">
+	<div class="header-left">
+	  <h1>
+		kyle<br />
+		putnam
+	  </h1>
+	</div>
+  </div>
+  
+
 
 	<footer>
-	  <p>© {{ helpers.currentYear() }} Kyle Putnam</p>
+	  <p>© 2025 Kyle Putnam</p>
 	</footer>
   </body>
 </html>

@@ -3,9 +3,6 @@ module.exports = function(eleventyConfig) {
 	return collectionApi.getFilteredByGlob("./blog/*.md");
   });
   return {
-	dir: {
-	  input: ".",
-	  output: "_site"
-	}
+	dir: { input: ".", output: "_site" }
   };
 };
