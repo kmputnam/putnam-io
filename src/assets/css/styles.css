@@ -265,6 +265,14 @@ a:focus-visible {
   padding-top: clamp(1.55rem, 2.7vw, 2.1rem);
 }
 
+/* Avoid double-divider when a section follows a bordered intro block */
+.hero-home + .section-block,
+.page-heading + .section-block {
+  margin-top: clamp(2rem, 4vw, 3rem);
+  border-top: none;
+  padding-top: clamp(1.2rem, 2.2vw, 1.7rem);
+}
+
 .section-label {
   margin: 0;
   font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
