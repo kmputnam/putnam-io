@@ -1,1 +1,51 @@
-# Heading
+# putnam-io
+
+Multi-page executive profile website built with [Eleventy](https://www.11ty.dev/), Nunjucks templates, and Markdown content.
+
+## Tech stack
+
+- Eleventy (latest stable installed via npm)
+- Nunjucks layout templates
+- Markdown pages (`src/index.md`, `src/initiatives.md`, `src/operating-model.md`, `src/direction.md`, `src/contact.md`)
+- JSON data for reusable site and initiative content
+- CSS-only automatic light/dark mode using `prefers-color-scheme`
+
+## Project structure
+
+- `src/index.md`: Home page
+- `src/initiatives.md`: Strategic Initiatives page
+- `src/operating-model.md`: Operating Model page
+- `src/direction.md`: Platform Direction page
+- `src/contact.md`: Contact page
+- `src/_includes/layouts/base.njk`: Shared layout with global header/nav
+- `src/_data/site.json`: Name/title/positioning/contact/nav
+- `src/_data/initiatives.json`: Strategic initiatives list
+- `src/assets/css/styles.css`: Global styles and theme tokens
+- `src/assets/images/headshot.png`: Optional homepage portrait image
+- `src/assets/icons/*`: Favicon and app-icon assets (svg, ico, png variants)
+- `src/site.webmanifest`: Web app manifest
+- `_site/`: Static output directory
+
+## Local development
+
+```bash
+npm install
+npm run start
+```
+
+## Production build
+
+```bash
+npm run build
+```
+
+Generated site output is written to `_site/`.
+
+## Cloudflare Pages deployment
+
+Use a Cloudflare Pages project connected to this repository with these settings:
+
+- Framework preset: `None` (custom static site)
+- Build command: `npm run build`
+- Build output directory: `_site`
+- Node.js version: `20` or newer

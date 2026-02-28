@@ -1,0 +1,32 @@
+{
+  "name": "Kyle Putnam",
+  "title": "Product & Platform Leader",
+  "positioningLine": "Shaping product strategy and aligning platform architecture for durable, scalable systems.",
+  "contactSentence": "Open to conversations around product strategy, platform architecture, and system transformation.",
+  "headshot": {
+    "src": "/assets/images/headshot.png",
+    "alt": "Portrait of Kyle Putnam"
+  },
+  "contact": {
+    "email": "kyle@putnam.io",
+    "linkedin": "https://www.linkedin.com/in/kmputnam/"
+  },
+  "nav": [
+    {
+      "label": "Initiatives",
+      "href": "/initiatives/"
+    },
+    {
+      "label": "Operating Model",
+      "href": "/operating-model/"
+    },
+    {
+      "label": "Direction",
+      "href": "/direction/"
+    },
+    {
+      "label": "Contact",
+      "href": "/contact/"
+    }
+  ]
+}

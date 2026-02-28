@@ -1,16 +1,16 @@
 {
   "name": "putnam-io",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "private": true,
+  "description": "Single-page executive profile built with Eleventy.",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "eleventy",
+    "start": "eleventy --serve"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "dependencies": {
+  "devDependencies": {
     "@11ty/eleventy": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=20"
   }
 }

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="North marker icon">
+  <!-- Open ring (gap at top) -->
+  <path
+	d="M 67.3 19.9
+	   A 35 35 0 1 1 32.7 19.9"
+	fill="none"
+	stroke="#1D4ED8"
+	stroke-width="10"
+	stroke-linecap="round"
+	stroke-linejoin="round"
+  />
+
+  <!-- North tick (slightly tapered) -->
+  <path
+	d="M 46 6
+	   L 54 6
+	   L 57 22
+	   Q 50 28 43 22
+	   Z"
+	fill="#1D4ED8"
+  />
+</svg>

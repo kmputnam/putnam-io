@@ -1,0 +1,42 @@
+[
+  {
+    "title": "Regulatory-Ready Platform Modernization",
+    "meta": "Enterprise Platforms · Executive Sponsor · 2022-2025",
+    "scope": "Scope: Consolidated fragmented core systems into a governed platform model with standardized controls and reusable architecture patterns.",
+    "bullets": [
+      "Established an architecture governance forum that reduced decision cycle time while improving compliance traceability.",
+      "Prioritized modernization waves by customer and regulatory impact to maintain service continuity during migration.",
+      "Aligned product, risk, and engineering roadmaps around shared platform outcomes and measurable milestones."
+    ]
+  },
+  {
+    "title": "Data and Decisioning Operating Backbone",
+    "meta": "Product Strategy · Portfolio Lead · 2020-2024",
+    "scope": "Scope: Built a cross-domain data foundation and decisioning capabilities to improve speed, consistency, and transparency of critical workflows.",
+    "bullets": [
+      "Defined canonical data contracts and ownership boundaries across business and technology domains.",
+      "Introduced decisioning services that improved policy consistency and reduced manual exception handling.",
+      "Implemented KPI instrumentation to tie platform investments directly to operational and customer outcomes."
+    ]
+  },
+  {
+    "title": "Resilience and Service Reliability Program",
+    "meta": "Operations & Engineering · Steering Lead · 2021-2025",
+    "scope": "Scope: Reframed reliability as a strategic capability by integrating architecture, SRE, and operating governance.",
+    "bullets": [
+      "Set reliability objectives for critical journeys and tied funding to resilience risk reduction.",
+      "Standardized incident learning and remediation tracking across product lines.",
+      "Raised executive visibility through quarterly resilience reviews and forward-looking risk indicators."
+    ]
+  },
+  {
+    "title": "Platform Economics and Portfolio Prioritization",
+    "meta": "Enterprise Transformation · Program Owner · 2019-2024",
+    "scope": "Scope: Introduced investment frameworks that balanced near-term delivery pressure with long-term platform health.",
+    "bullets": [
+      "Created a platform economics model to compare run-cost reduction and strategic capability gains.",
+      "Shifted intake toward reusable platform services instead of one-off implementations.",
+      "Improved delivery confidence by linking initiative sequencing to dependency and capacity realities."
+    ]
+  }
+]
