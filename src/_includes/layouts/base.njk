@@ -34,11 +34,13 @@
         <a class="header-home{% if page.url == '/' %} is-active{% endif %}" href="/">Home</a>
         <nav class="site-nav" aria-label="Primary navigation">
           {% for item in site.nav %}
+            {# Keep parent sections active for nested routes like /writing/some-post/. #}
+            {% set isActive = page.url == item.href or (page.url and item.href != '/' and page.url.indexOf(item.href) == 0) %}
             {# aria-current drives accessibility and the visual "current page" indicator. #}
             <a
-              class="{% if page.url == item.href %}is-active{% endif %}"
+              class="{% if isActive %}is-active{% endif %}"
               href="{{ item.href }}"
-              {% if page.url == item.href %}aria-current="page"{% endif %}
+              {% if isActive %}aria-current="page"{% endif %}
             >{{ item.label }}</a>
           {% endfor %}
         </nav>

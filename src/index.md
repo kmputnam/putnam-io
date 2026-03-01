@@ -15,10 +15,10 @@ permalink: /
 
 <section class="section-block" aria-labelledby="overview-label">
   <p id="overview-label" class="section-label">Overview</p>
-  <p class="page-intro">Explore the core areas of work and operating philosophy.</p>
+  <p class="page-intro">Explore strategy work, written thinking, platform direction, and how to connect.</p>
   <ul class="page-links">
     <li><a href="/initiatives/">Strategic Initiatives</a></li>
-    <li><a href="/operating-model/">Operating Model</a></li>
+    <li><a href="/writing/">Writing</a></li>
     <li><a href="/direction/">Platform Direction</a></li>
     <li><a href="/contact/">Contact</a></li>
   </ul>

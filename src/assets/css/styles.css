@@ -326,6 +326,68 @@ a:focus-visible {
   font-weight: 600;
 }
 
+.writing-index {
+  max-width: none;
+}
+
+.writing-list {
+  margin-top: 0.5rem;
+}
+
+.writing-item {
+  border-top: 1px solid var(--border);
+  padding: 1.55rem 0 1.65rem;
+}
+
+.writing-item:last-child {
+  border-bottom: 1px solid var(--border);
+}
+
+.writing-title {
+  margin: 0;
+  font-size: clamp(1.22rem, 2.15vw, 1.45rem);
+  line-height: 1.24;
+}
+
+.writing-title a {
+  text-decoration: none;
+}
+
+.writing-deck {
+  margin: 0.66rem 0 0;
+  max-width: 68ch;
+  color: var(--muted);
+}
+
+.article-body {
+  max-width: 72ch;
+}
+
+.article-body > :first-child {
+  margin-top: 0;
+}
+
+.article-body h2,
+.article-body h3 {
+  margin: 1.95rem 0 0.7rem;
+  line-height: 1.26;
+}
+
+.article-body p,
+.article-body ul,
+.article-body ol {
+  margin: 0 0 1rem;
+}
+
+.article-body ul,
+.article-body ol {
+  padding-left: 1.25rem;
+}
+
+.article-body li {
+  margin-bottom: 0.42rem;
+}
+
 .initiatives-section {
   max-width: none;
 }

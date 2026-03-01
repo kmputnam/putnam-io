@@ -13,7 +13,7 @@ This file captures the key context, decisions, and lessons learned while buildin
 ## Current Information Architecture
 - `/` Home
 - `/initiatives/` Strategic Initiatives
-- `/operating-model/` Operating Model
+- `/writing/` Writing
 - `/direction/` Platform Direction
 - `/contact/` Contact
 
@@ -29,6 +29,7 @@ This file captures the key context, decisions, and lessons learned while buildin
 ## Data + Content Source of Truth
 - Global content/settings: `src/_data/site.json`
 - Initiatives content: `src/_data/initiatives.json`
+- Writing content: `src/writing/*.md`
 - Page content: Markdown files under `src/*.md`
 
 ### Current Contact Values
@@ -37,6 +38,7 @@ This file captures the key context, decisions, and lessons learned while buildin
 
 ## Template + Styling Architecture
 - Base layout: `src/_includes/layouts/base.njk`
+- Writing post layout: `src/_includes/layouts/writing-post.njk`
 - Global CSS: `src/assets/css/styles.css`
 - Navigation current-page state:
   - Layout applies `.is-active` and `aria-current="page"` based on `page.url`.
@@ -144,6 +146,7 @@ CI workflow baseline:
 1. Run `npm run build`, `npm run start`, and `npm run start:worker`.
 2. Verify nav active underline on each page.
 3. Verify `/contact/` has correct email and LinkedIn.
-4. Verify favicon in both Chrome and Safari.
-5. Verify `/site.webmanifest` returns 200 locally.
-6. Verify hero image behavior at desktop/tablet/mobile breakpoints.
+4. Verify `/writing/` lists posts and each post page keeps the Writing nav item active.
+5. Verify favicon in both Chrome and Safari.
+6. Verify `/site.webmanifest` returns 200 locally.
+7. Verify hero image behavior at desktop/tablet/mobile breakpoints.

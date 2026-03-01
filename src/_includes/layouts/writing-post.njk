@@ -1,0 +1,18 @@
+---
+layout: layouts/base.njk
+---
+
+<article aria-labelledby="writing-post-title">
+  <section class="page-heading">
+    <p class="section-label">Writing</p>
+    <h1 id="writing-post-title" class="page-title">{{ title }}</h1>
+    {% if deck %}
+      <p class="page-intro">{{ deck }}</p>
+    {% endif %}
+  </section>
+
+  <section class="section-block article-body" aria-label="Article content">
+    {# Intentionally no visible publish date; content stays evergreen in presentation. #}
+    {{ content | safe }}
+  </section>
+</article>
