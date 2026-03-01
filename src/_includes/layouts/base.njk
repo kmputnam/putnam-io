@@ -8,6 +8,7 @@
       name="description"
       content="Executive profile for {{ site.name }} focused on product strategy and platform architecture."
     />
+    {# Keep both root and /assets icon links to satisfy Safari + legacy favicon lookups. #}
     <meta name="theme-color" content="#1D4ED8" />
     <link rel="icon" href="/assets/icons/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -33,6 +34,7 @@
         <a class="header-home{% if page.url == '/' %} is-active{% endif %}" href="/">Home</a>
         <nav class="site-nav" aria-label="Primary navigation">
           {% for item in site.nav %}
+            {# aria-current drives accessibility and the visual "current page" indicator. #}
             <a
               class="{% if page.url == item.href %}is-active{% endif %}"
               href="{{ item.href }}"

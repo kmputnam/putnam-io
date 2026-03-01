@@ -139,6 +139,7 @@ a:focus-visible {
   padding-bottom: 0.28rem;
 }
 
+/* Subtle active-page underline without changing layout height. */
 .site-nav a::after {
   content: "";
   position: absolute;
@@ -198,6 +199,7 @@ a:focus-visible {
   padding: clamp(1.6rem, 2.8vw, 2.2rem) 0 clamp(2.1rem, 4vw, 3rem);
 }
 
+/* Home portrait is decorative; keep it behind copy and out of pointer/focus flow. */
 .hero-copy {
   position: relative;
   z-index: 1;
@@ -291,6 +293,7 @@ a:focus-visible {
   counter-reset: item;
 }
 
+/* Grid keeps the counter and label vertically aligned across varying line heights. */
 .page-links li,
 .content-list li {
   display: grid;
@@ -449,6 +452,7 @@ a:focus-visible {
   }
 
   .hero-bg {
+    /* Remove background portrait on phones to preserve text readability. */
     display: none;
   }
 
