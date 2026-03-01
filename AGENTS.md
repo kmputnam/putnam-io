@@ -8,7 +8,7 @@ This file captures the key context, decisions, and lessons learned while buildin
 - Stack: Eleventy + Nunjucks + Markdown + JSON data
 - Site type: multi-page executive profile
 - Output: static files in `_site/`
-- Hosting target: Cloudflare Pages
+- Hosting target: Cloudflare Workers (static assets via Wrangler)
 
 ## Current Information Architecture
 - `/` Home
@@ -94,17 +94,30 @@ These root-level passthroughs were added specifically to fix local/browser 404 a
 - Install: `npm install`
 - Build: `npm run build`
 - Serve/watch: `npm run start`
+- Serve via Workers runtime: `npm run start:worker`
+- Deploy Worker: `npm run deploy`
 
 Notes:
 - Dev server port may auto-shift if busy (`8080`, `8081`, etc.).
 - `_site` can retain stale assets between iterations; if behavior seems wrong, do a clean rebuild.
+- Wrangler local preview state lives in `.wrangler/` and should stay gitignored.
 
-## Cloudflare Pages Deployment
-Use:
-- Framework preset: `None` (custom static)
-- Build command: `npm run build`
-- Build output directory: `_site`
-- Node version: `20+`
+## Cloudflare Workers Deployment
+Configuration lives in `wrangler.toml`:
+- Worker name: `putnam-io`
+- `compatibility_date` pinned for runtime stability
+- `[assets].directory = "./_site"` to serve Eleventy output
+- `html_handling = "auto-trailing-slash"` for friendly page routes
+- `not_found_handling = "404-page"` for true multi-page 404 behavior
+
+Deploy workflow:
+1. `npx wrangler login` (first-time local auth)
+2. `npm run deploy`
+
+CI workflow baseline:
+1. `npm ci`
+2. `npm run build`
+3. `npx wrangler deploy`
 
 ## Known Gotchas and Fixes
 - `site.webmanifest` 404:
@@ -123,11 +136,14 @@ Use:
   - Cause: old generated assets in `_site`.
   - Fix: clean stale output and rebuild if necessary.
 
+- Worker deploy fails with auth/account error:
+  - Cause: Wrangler session missing/expired in local environment.
+  - Fix: run `npx wrangler login` again.
+
 ## If You Revisit Later (Checklist)
-1. Run `npm run build` and `npm run start`.
+1. Run `npm run build`, `npm run start`, and `npm run start:worker`.
 2. Verify nav active underline on each page.
 3. Verify `/contact/` has correct email and LinkedIn.
 4. Verify favicon in both Chrome and Safari.
 5. Verify `/site.webmanifest` returns 200 locally.
 6. Verify hero image behavior at desktop/tablet/mobile breakpoints.
-

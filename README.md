@@ -9,6 +9,7 @@ Multi-page executive profile website built with [Eleventy](https://www.11ty.dev/
 - Markdown pages (`src/index.md`, `src/initiatives.md`, `src/operating-model.md`, `src/direction.md`, `src/contact.md`)
 - JSON data for reusable site and initiative content
 - CSS-only automatic light/dark mode using `prefers-color-scheme`
+- Cloudflare Workers static asset hosting via Wrangler
 
 ## Project structure
 
@@ -25,12 +26,19 @@ Multi-page executive profile website built with [Eleventy](https://www.11ty.dev/
 - `src/assets/icons/*`: Favicon and app-icon assets (svg, ico, png variants)
 - `src/site.webmanifest`: Web app manifest
 - `_site/`: Static output directory
+- `wrangler.toml`: Workers deployment/runtime config
 
 ## Local development
 
 ```bash
 npm install
 npm run start
+```
+
+To run the site through Cloudflare Workers locally:
+
+```bash
+npm run start:worker
 ```
 
 ## Production build
@@ -41,11 +49,26 @@ npm run build
 
 Generated site output is written to `_site/`.
 
-## Cloudflare Pages deployment
+## Cloudflare Workers deployment
 
-Use a Cloudflare Pages project connected to this repository with these settings:
+1. Authenticate Wrangler (first time only):
 
-- Framework preset: `None` (custom static site)
-- Build command: `npm run build`
-- Build output directory: `_site`
+```bash
+npx wrangler login
+```
+
+2. Build + deploy:
+
+```bash
+npm run deploy
+```
+
+### Runtime/deploy notes
+
+- Worker name: `putnam-io` (configured in `wrangler.toml`)
+- Static assets directory: `_site`
 - Node.js version: `20` or newer
+- For CI/CD (for example GitHub Actions), run:
+  - `npm ci`
+  - `npm run build`
+  - `npx wrangler deploy`

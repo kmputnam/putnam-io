@@ -2,13 +2,16 @@
   "name": "putnam-io",
   "version": "1.0.0",
   "private": true,
-  "description": "Single-page executive profile built with Eleventy.",
+  "description": "Multi-page executive profile built with Eleventy.",
   "scripts": {
     "build": "eleventy",
-    "start": "eleventy --serve"
+    "start": "eleventy --serve",
+    "start:worker": "npm run build && wrangler dev",
+    "deploy": "npm run build && wrangler deploy"
   },
   "devDependencies": {
-    "@11ty/eleventy": "^3.0.0"
+    "@11ty/eleventy": "^3.0.0",
+    "wrangler": "^4.49.1"
   },
   "engines": {
     "node": ">=20"

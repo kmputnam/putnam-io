@@ -1,0 +1,15 @@
+# Cloudflare Worker name shown in the dashboard and used for worker.dev previews.
+name = "putnam-io"
+
+# Pin runtime compatibility so behavior is stable across deploys.
+compatibility_date = "2026-03-01"
+
+[assets]
+# Serve Eleventy build output as static assets from this directory.
+directory = "./_site"
+
+# Keep Eleventy-style trailing-slash routes working (for example /initiatives/).
+html_handling = "auto-trailing-slash"
+
+# This is a multi-page site, so unknown routes should return a real 404.
+not_found_handling = "404-page"
