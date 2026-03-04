@@ -2,13 +2,13 @@
 name = "putnam-io"
 
 # Pin runtime compatibility so behavior is stable across deploys.
-compatibility_date = "2026-03-01"
+compatibility_date = "2026-03-04"
 
 [assets]
-# Serve Eleventy build output as static assets from this directory.
-directory = "./_site"
+# Serve Astro build output as static assets from this directory.
+directory = "./dist"
 
-# Keep Eleventy-style trailing-slash routes working (for example /initiatives/).
+# Keep trailing-slash routes working (for example /initiatives/).
 html_handling = "auto-trailing-slash"
 
 # This is a multi-page site, so unknown routes should return a real 404.

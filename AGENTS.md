@@ -5,10 +5,10 @@ This file captures the key context, decisions, and lessons learned while buildin
 
 ## Project Snapshot
 - Project: `putnam-io`
-- Stack: Eleventy + Nunjucks + Markdown + JSON data
+- Stack: Astro + Astro content collections + Markdown/JSON content
 - Site type: multi-page executive profile
-- Output: static files in `_site/`
-- Hosting target: Cloudflare Workers (static assets via Wrangler)
+- Output: static files in `dist/`
+- Hosting target: Cloudflare Workers (static assets via Wrangler + Workers Builds)
 
 ## Current Information Architecture
 - `/` Home
@@ -27,21 +27,22 @@ This file captures the key context, decisions, and lessons learned while buildin
 - On mobile phone sizes, hero background image should be hidden for readability.
 
 ## Data + Content Source of Truth
-- Global content/settings: `src/_data/site.json`
-- Initiatives content: `src/_data/initiatives.json`
-- Writing content: `src/writing/*.md`
-- Page content: Markdown files under `src/*.md`
+- Global content/settings: `src/data/site.ts`
+- Initiatives content: `src/content/initiatives/*.json`
+- Writing content: `src/content/writing/*.md`
+- Page and route templates: `src/pages/**/*.astro`
+- Collections schema: `src/content.config.ts`
 
 ### Current Contact Values
 - Email: `kyle@putnam.io`
 - LinkedIn: `https://www.linkedin.com/in/kmputnam/`
 
 ## Template + Styling Architecture
-- Base layout: `src/_includes/layouts/base.njk`
-- Writing post layout: `src/_includes/layouts/writing-post.njk`
-- Global CSS: `src/assets/css/styles.css`
+- Base layout: `src/layouts/BaseLayout.astro`
+- Writing post layout: `src/layouts/WritingPostLayout.astro`
+- Global CSS: `src/styles/global.css`
 - Navigation current-page state:
-  - Layout applies `.is-active` and `aria-current="page"` based on `page.url`.
+  - Layout applies `.is-active` and `aria-current="page"` based on `Astro.url.pathname`.
   - CSS uses a subtle underline pseudo-element on active nav links.
 
 ## Theme Behavior
@@ -51,7 +52,7 @@ This file captures the key context, decisions, and lessons learned while buildin
 
 ## Hero Image Behavior (Home Page)
 - Asset path in data: `site.headshot.src`
-- Current active image: `src/assets/images/headshot.png`
+- Current active image: `public/assets/images/headshot.png`
 - Implementation: image rendered as a background layer (`.hero-bg`) behind hero copy.
 - Responsive behavior:
   - Desktop: full figure visible, right-aligned.
@@ -59,7 +60,7 @@ This file captures the key context, decisions, and lessons learned while buildin
   - Phone (`max-width: 640px`): image hidden (`display: none`).
 
 ## Favicon + Manifest Setup
-- Icons directory: `src/assets/icons/`
+- Icons directory: `public/assets/icons/`
 - Includes:
   - `favicon.svg`
   - `favicon.ico`
@@ -69,8 +70,8 @@ This file captures the key context, decisions, and lessons learned while buildin
   - `android-chrome-192x192.png`
   - `android-chrome-512x512.png`
   - `safari-pinned-tab.svg`
-- Manifest: `src/site.webmanifest`
-- Head tags in `base.njk` include:
+- Manifest: `public/site.webmanifest`
+- Head tags in `BaseLayout.astro` include:
   - SVG icon
   - root `/favicon.ico` fallback
   - PNG favicon sizes
@@ -78,53 +79,50 @@ This file captures the key context, decisions, and lessons learned while buildin
   - Safari `mask-icon`
   - `/site.webmanifest`
 
-## Eleventy Config Notes
-File: `.eleventy.js`
+## Astro Config Notes
+File: `astro.config.mjs`
 
-Passthrough copy must include:
-- `src/assets/css` -> `assets/css`
-- `src/assets/icons` -> `assets/icons`
-- `src/assets/images` -> `assets/images`
-- `src/site.webmanifest` -> `site.webmanifest`
-- `src/assets/icons/favicon.ico` -> `favicon.ico`
-- `src/assets/icons/apple-touch-icon.png` -> `apple-touch-icon.png`
-- `src/assets/icons/safari-pinned-tab.svg` -> `safari-pinned-tab.svg`
+Key settings:
+- `output: "static"`
+- `trailingSlash: "always"`
+- `outDir: "./dist"`
+- `site: "https://putnam.io"`
 
-These root-level passthroughs were added specifically to fix local/browser 404 and Safari favicon behavior.
+Collections:
+- `writing`: Markdown entries with `title`, optional `deck`, required hidden `date`, optional `draft`
+- `initiatives`: JSON entries with `title`, `meta`, `scope`, `bullets` (max 3), `order`
 
 ## Local Dev Commands
 - Install: `npm install`
+- Type/content check: `npm run check`
 - Build: `npm run build`
 - Serve/watch: `npm run start`
 - Serve via Workers runtime: `npm run start:worker`
-- Deploy Worker: `npm run deploy`
+- Emergency-only manual deploy: `npm run deploy:manual`
 
 Notes:
 - Dev server port may auto-shift if busy (`8080`, `8081`, etc.).
-- `_site` can retain stale assets between iterations; if behavior seems wrong, do a clean rebuild.
+- `dist` can retain stale assets between iterations; if behavior seems wrong, do a clean rebuild.
 - Wrangler local preview state lives in `.wrangler/` and should stay gitignored.
 
 ## Cloudflare Workers Deployment
 Configuration lives in `wrangler.toml`:
 - Worker name: `putnam-io`
 - `compatibility_date` pinned for runtime stability
-- `[assets].directory = "./_site"` to serve Eleventy output
+- `[assets].directory = "./dist"` to serve Astro output
 - `html_handling = "auto-trailing-slash"` for friendly page routes
 - `not_found_handling = "404-page"` for true multi-page 404 behavior
 
-Deploy workflow:
-1. `npx wrangler login` (first-time local auth)
-2. `npm run deploy`
-
-CI workflow baseline:
-1. `npm ci`
-2. `npm run build`
-3. `npx wrangler deploy`
+### Deploy Pipeline Policy (Important)
+- Primary deploy path is Cloudflare Workers Builds from git pushes to `main`.
+- Do not add `.github/workflows/*` deploy jobs.
+- Do not introduce a second auto-deploy pipeline outside Cloudflare Workers Builds.
+- `npm run deploy:manual` is fallback-only.
 
 ## Known Gotchas and Fixes
 - `site.webmanifest` 404:
-  - Cause: not copied to root output.
-  - Fix: passthrough `src/site.webmanifest` to `site.webmanifest`.
+  - Cause: missing root static file.
+  - Fix: ensure `public/site.webmanifest` exists and `/site.webmanifest` is referenced in head.
 
 - Safari favicon not showing:
   - Causes: missing root icon fallbacks and/or caching.
@@ -135,15 +133,19 @@ CI workflow baseline:
     - clear Safari cache for localhost/domain when testing updates
 
 - Stale image in build output:
-  - Cause: old generated assets in `_site`.
+  - Cause: old generated assets in `dist`.
   - Fix: clean stale output and rebuild if necessary.
 
 - Worker deploy fails with auth/account error:
   - Cause: Wrangler session missing/expired in local environment.
   - Fix: run `npx wrangler login` again.
 
+- Writing post order confusion:
+  - Cause: all entries are date-hidden in UI.
+  - Fix: use frontmatter `date` only for sorting and never render it in templates.
+
 ## If You Revisit Later (Checklist)
-1. Run `npm run build`, `npm run start`, and `npm run start:worker`.
+1. Run `npm run check`, `npm run build`, `npm run start`, and `npm run start:worker`.
 2. Verify nav active underline on each page.
 3. Verify `/contact/` has correct email and LinkedIn.
 4. Verify `/writing/` lists posts and each post page keeps the Writing nav item active.

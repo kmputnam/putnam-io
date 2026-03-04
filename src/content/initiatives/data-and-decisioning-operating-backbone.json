@@ -1,0 +1,11 @@
+{
+  "title": "Data and Decisioning Operating Backbone",
+  "meta": "Product Strategy · Portfolio Lead · 2020-2024",
+  "scope": "Scope: Built a cross-domain data foundation and decisioning capabilities to improve speed, consistency, and transparency of critical workflows.",
+  "bullets": [
+    "Defined canonical data contracts and ownership boundaries across business and technology domains.",
+    "Introduced decisioning services that improved policy consistency and reduced manual exception handling.",
+    "Implemented KPI instrumentation to tie platform investments directly to operational and customer outcomes."
+  ],
+  "order": 2
+}

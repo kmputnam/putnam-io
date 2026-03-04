@@ -1,0 +1,11 @@
+{
+  "title": "Regulatory-Ready Platform Modernization",
+  "meta": "Enterprise Platforms · Executive Sponsor · 2022-2025",
+  "scope": "Scope: Consolidated fragmented core systems into a governed platform model with standardized controls and reusable architecture patterns.",
+  "bullets": [
+    "Established an architecture governance forum that reduced decision cycle time while improving compliance traceability.",
+    "Prioritized modernization waves by customer and regulatory impact to maintain service continuity during migration.",
+    "Aligned product, risk, and engineering roadmaps around shared platform outcomes and measurable milestones."
+  ],
+  "order": 1
+}

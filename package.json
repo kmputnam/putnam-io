@@ -2,15 +2,18 @@
   "name": "putnam-io",
   "version": "1.0.0",
   "private": true,
-  "description": "Multi-page executive profile built with Eleventy.",
+  "description": "Multi-page executive profile built with Astro.",
   "scripts": {
-    "build": "eleventy",
-    "start": "eleventy --serve",
+    "build": "astro build",
+    "start": "astro dev",
     "start:worker": "npm run build && wrangler dev",
-    "deploy": "npm run build && wrangler deploy"
+    "deploy:manual": "npm run build && wrangler deploy",
+    "check": "astro check"
   },
   "devDependencies": {
-    "@11ty/eleventy": "^3.0.0",
+    "@astrojs/check": "^0.9.6",
+    "astro": "^5.16.0",
+    "typescript": "^5.9.3",
     "wrangler": "^4.49.1"
   },
   "engines": {

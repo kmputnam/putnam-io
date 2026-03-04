@@ -1,0 +1,42 @@
+---
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+type InitiativeEntry = CollectionEntry<"initiatives">;
+
+const initiatives = (await getCollection("initiatives")).sort(
+  (a: InitiativeEntry, b: InitiativeEntry) => a.data.order - b.data.order
+);
+---
+
+<BaseLayout title="Strategic Initiatives">
+  <section class="page-heading" aria-labelledby="initiatives-heading">
+    <p class="section-label">Strategic Initiatives</p>
+    <h1 id="initiatives-heading" class="page-title">Strategic Initiatives</h1>
+    <p class="page-intro">Key transformation programs focused on strategy, platform leverage, and resilient execution.</p>
+  </section>
+
+  <section class="section-block initiatives-section" aria-label="Initiatives list">
+    <div class="initiatives-list">
+      {
+        initiatives.map((initiative: InitiativeEntry) => (
+          <article class="initiative">
+            <div class="initiative-grid">
+              <header class="initiative-header">
+                <h3>{initiative.data.title}</h3>
+                <p class="initiative-meta">{initiative.data.meta}</p>
+              </header>
+              <div class="initiative-body">
+                <p class="initiative-scope">{initiative.data.scope}</p>
+                <ul>
+                  {initiative.data.bullets.map((bullet: string) => <li>{bullet}</li>)}
+                </ul>
+              </div>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>

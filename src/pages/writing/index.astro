@@ -1,0 +1,38 @@
+---
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+type WritingEntry = CollectionEntry<"writing">;
+
+const posts = (await getCollection("writing", ({ data }) => !data.draft)).sort(
+  (a: WritingEntry, b: WritingEntry) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+<BaseLayout title="Writing">
+  <section class="page-heading" aria-labelledby="writing-heading">
+    <p class="section-label">Writing</p>
+    <h1 id="writing-heading" class="page-title">Writing</h1>
+    <p class="page-intro">
+      Short essays on product strategy, platform decisions, and execution in complex environments.
+    </p>
+  </section>
+
+  <section class="section-block writing-index" aria-label="Writing list">
+    {
+      posts.length ? (
+        <div class="writing-list">
+          {posts.map((post: WritingEntry) => (
+            <article class="writing-item">
+              <h2 class="writing-title"><a href={`/writing/${post.id}/`}>{post.data.title}</a></h2>
+              {post.data.deck && <p class="writing-deck">{post.data.deck}</p>}
+            </article>
+          ))}
+        </div>
+      ) : (
+        <p class="page-intro">Posts coming soon.</p>
+      )
+    }
+  </section>
+</BaseLayout>
