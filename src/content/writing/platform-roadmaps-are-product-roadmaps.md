@@ -1,10 +1,7 @@
 ---
-layout: layouts/writing-post.njk
 title: Platform Roadmaps Are Product Roadmaps
 deck: Treat platform work as product work or accept a permanent execution tax.
-tags:
-  - writing
-permalink: /writing/platform-roadmaps-are-product-roadmaps/index.html
+date: 2026-03-01T16:06:49-06:00
 ---
 
 Platform teams are often asked to "enable everyone" while staying invisible. That creates backlog sprawl and weak prioritization.

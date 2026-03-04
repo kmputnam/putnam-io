@@ -1,10 +1,7 @@
 ---
-layout: layouts/writing-post.njk
 title: What Strong Execution Actually Looks Like
 deck: Execution quality is less about speed and more about how teams recover, learn, and re-commit.
-tags:
-  - writing
-permalink: /writing/what-strong-execution-actually-looks-like/index.html
+date: 2026-03-01T16:07:49-06:00
 ---
 
 High-performing teams miss targets sometimes. The difference is what happens next.

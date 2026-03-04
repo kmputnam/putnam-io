@@ -1,10 +1,7 @@
 ---
-layout: layouts/writing-post.njk
 title: Strategy Through Constraints
 deck: The fastest way to clarify strategy is to make tradeoffs explicit, early, and in writing.
-tags:
-  - writing
-permalink: /writing/strategy-through-constraints/index.html
+date: 2026-03-01T16:05:49-06:00
 ---
 
 Most strategy drift starts as unspoken assumptions. Teams move quickly, but in different directions.

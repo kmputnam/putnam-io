@@ -1,0 +1,57 @@
+export type NavItem = {
+  label: string;
+  href: string;
+};
+
+export type SiteData = {
+  name: string;
+  title: string;
+  positioningLine: string;
+  contactSentence: string;
+  headshot: {
+    src: string;
+    alt: string;
+  };
+  contact: {
+    email: string;
+    linkedin: string;
+  };
+  nav: NavItem[];
+};
+
+const site: SiteData = {
+  name: "Kyle Putnam",
+  title: "Product & Platform Leader",
+  positioningLine:
+    "Shaping product strategy and aligning platform architecture for durable, scalable systems.",
+  contactSentence:
+    "Open to conversations around product strategy, platform architecture, and system transformation.",
+  headshot: {
+    src: "/assets/images/headshot.png",
+    alt: "Portrait of Kyle Putnam"
+  },
+  contact: {
+    email: "kyle@putnam.io",
+    linkedin: "https://www.linkedin.com/in/kmputnam/"
+  },
+  nav: [
+    {
+      label: "Initiatives",
+      href: "/initiatives/"
+    },
+    {
+      label: "Writing",
+      href: "/writing/"
+    },
+    {
+      label: "Direction",
+      href: "/direction/"
+    },
+    {
+      label: "Contact",
+      href: "/contact/"
+    }
+  ]
+};
+
+export default site;

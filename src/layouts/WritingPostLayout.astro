@@ -1,0 +1,25 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+
+interface Props {
+  title: string;
+  deck?: string;
+}
+
+const { title, deck } = Astro.props as Props;
+---
+
+<BaseLayout title={title}>
+  <article aria-labelledby="writing-post-title">
+    <section class="page-heading">
+      <p class="section-label">Writing</p>
+      <h1 id="writing-post-title" class="page-title">{title}</h1>
+      {deck && <p class="page-intro">{deck}</p>}
+    </section>
+
+    <section class="section-block article-body" aria-label="Article content">
+      {/* Intentionally no visible publish date; content stays evergreen in presentation. */}
+      <slot />
+    </section>
+  </article>
+</BaseLayout>
