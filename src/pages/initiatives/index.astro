@@ -10,7 +10,7 @@ const initiatives = (await getCollection("initiatives")).sort(
 );
 ---
 
-<BaseLayout title="Strategic Initiatives">
+<BaseLayout title="Strategic Initiatives" description="Selected transformation programs led by Kyle Putnam across platform modernization, reliability, data, and portfolio strategy.">
   <section class="page-heading" aria-labelledby="initiatives-heading">
     <p class="section-label">Strategic Initiatives</p>
     <h1 id="initiatives-heading" class="page-title">Strategic Initiatives</h1>
@@ -24,7 +24,7 @@ const initiatives = (await getCollection("initiatives")).sort(
           <article class="initiative">
             <div class="initiative-grid">
               <header class="initiative-header">
-                <h3>{initiative.data.title}</h3>
+                <h2>{initiative.data.title}</h2>
                 <p class="initiative-meta">{initiative.data.meta}</p>
               </header>
               <div class="initiative-body">

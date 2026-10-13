@@ -1,21 +1,33 @@
 ---
 import site from "../data/site";
 import "../styles/global.css";
+import "@fontsource/inter/latin-400.css";
+import "@fontsource/inter/latin-500.css";
+import "@fontsource/inter/latin-600.css";
+import "@fontsource/inter/latin-700.css";
+import "@fontsource/jetbrains-mono/latin-400.css";
 
 interface Props {
   title: string;
   description?: string;
   currentPath?: string;
+  noindex?: boolean;
+  type?: "website" | "article";
 }
 
 const {
   title,
   description = `Executive profile for ${site.name} focused on product strategy and platform architecture.`,
-  currentPath
+  currentPath,
+  noindex = false,
+  type = "website"
 } = Astro.props as Props;
 
 const pathname = currentPath ?? Astro.url.pathname;
 const isHomeActive = pathname === "/";
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const pageTitle = `${title} | ${site.name}`;
+const socialImage = new URL("/assets/icons/android-chrome-512x512.png", Astro.site);
 ---
 
 <!doctype html>
@@ -23,8 +35,23 @@ const isHomeActive = pathname === "/";
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title} | {site.name}</title>
+    <title>{pageTitle}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:width" content="512" />
+    <meta property="og:image:height" content="512" />
+    <meta property="og:image:alt" content="Kyle Putnam north marker icon" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
     {/* Keep both root and /assets icon links to satisfy Safari + legacy favicon lookups. */}
     <meta name="theme-color" content="#1D4ED8" />
     <link rel="icon" href="/assets/icons/favicon.svg" type="image/svg+xml" />
@@ -36,18 +63,12 @@ const isHomeActive = pathname === "/";
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png" />
     <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#1D4ED8" />
     <link rel="manifest" href="/site.webmanifest" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400&display=swap"
-      rel="stylesheet"
-    />
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
     <header class="site-header" aria-label="Primary">
       <div class="container header-inner">
-        <a class={`header-home${isHomeActive ? " is-active" : ""}`} href="/">Home</a>
+        <a class={`header-home${isHomeActive ? " is-active" : ""}`} href="/" aria-current={isHomeActive ? "page" : undefined}>Home</a>
         <nav class="site-nav" aria-label="Primary navigation">
           {
             site.nav.map((item) => {
@@ -55,7 +76,7 @@ const isHomeActive = pathname === "/";
               const isActive = pathname === item.href || (pathname && item.href !== "/" && pathname.startsWith(item.href));
 
               return (
-                <a class={isActive ? "is-active" : undefined} href={item.href} aria-current={isActive ? "page" : undefined}>
+                <a class={isActive ? "is-active" : undefined} href={item.href} aria-current={pathname === item.href ? "page" : isActive ? "location" : undefined}>
                   {item.label}
                 </a>
               );
@@ -65,7 +86,7 @@ const isHomeActive = pathname === "/";
       </div>
     </header>
 
-    <main id="main-content" class="container main-content">
+    <main id="main-content" class="container main-content" tabindex="-1">
       <slot />
     </main>
   </body>

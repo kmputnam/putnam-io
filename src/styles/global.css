@@ -50,6 +50,12 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+h1,
+h2,
+h3 {
+  overflow-wrap: anywhere;
+}
+
 a {
   color: inherit;
   text-decoration: underline;
@@ -60,6 +66,11 @@ a {
 }
 
 a:hover {
+  text-decoration-color: currentColor;
+}
+
+.page-intro a,
+.article-body a {
   text-decoration-color: currentColor;
 }
 
@@ -411,7 +422,7 @@ a:focus-visible {
   gap: 1.25rem 2.45rem;
 }
 
-.initiative h3 {
+.initiative h2 {
   margin: 0;
   font-size: clamp(1.22rem, 2.05vw, 1.4rem);
   line-height: 1.24;
@@ -489,7 +500,9 @@ a:focus-visible {
 
   .site-nav {
     width: 100%;
-    overflow-x: auto;
+    flex-wrap: wrap;
+    overflow-x: visible;
+    row-gap: 0.7rem;
     padding-bottom: 0.2rem;
     scrollbar-width: thin;
   }

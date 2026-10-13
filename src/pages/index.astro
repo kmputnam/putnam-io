@@ -1,11 +1,14 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import site from "../data/site";
+import { getImage } from "astro:assets";
+
+const portrait = await getImage({ src: site.headshot.src, width: 1520, format: "webp", quality: 80 });
 ---
 
-<BaseLayout title="Home">
+<BaseLayout title="Home" description={`${site.name}, ${site.title.toLowerCase()}. ${site.positioningLine}`}>
   <section class="hero hero-home" aria-label="Executive profile overview">
-    <div class="hero-bg" aria-hidden="true" style={`background-image: url('${site.headshot.src}');`}></div>
+    <div class="hero-bg" aria-hidden="true" style={`background-image: url('${portrait.src}');`}></div>
     <div class="hero-copy">
       <h1>{site.name}</h1>
       <p class="title-line">{site.title}</p>

@@ -1,78 +1,69 @@
 # putnam-io
 
-Multi-page executive profile website built with [Astro](https://astro.build/), typed content collections, and Cloudflare Workers static asset hosting.
+Kyle Putnam's professional profile and contact site uses Astro static output and Cloudflare Workers.
 
-## Tech stack
+## Development
 
-- Astro (static output)
-- Astro layouts/pages (`.astro`) + Markdown content entries
-- Typed content collections (`src/content.config.ts`)
-- CSS-only automatic light/dark mode using `prefers-color-scheme`
-- Cloudflare Workers static assets via Wrangler
+Use Node.js `24.18.0`, as pinned in `.node-version`. Astro requires Node.js `22.12.0` or later. The content checker supports TypeScript 6. TypeScript 7 is outside its supported peer range.
 
-## Project structure
-
-- `src/pages/index.astro`: Home page
-- `src/pages/initiatives/index.astro`: Strategic Initiatives page
-- `src/pages/writing/index.astro`: Writing index page
-- `src/pages/writing/[slug].astro`: Writing detail route
-- `src/pages/direction/index.astro`: Platform Direction page
-- `src/pages/contact/index.astro`: Contact page
-- `src/layouts/BaseLayout.astro`: Shared layout with global header/nav
-- `src/layouts/WritingPostLayout.astro`: Writing post layout (date-free presentation)
-- `src/content/writing/*.md`: Writing entries (sorted by hidden `date`)
-- `src/content/initiatives/*.json`: Initiative entries (sorted by `order`)
-- `src/content.config.ts`: Collection schema/type definitions
-- `src/data/site.ts`: Typed site metadata
-- `src/styles/global.css`: Global styles and theme tokens
-- `public/assets/icons/*`: Favicon/app icon assets
-- `public/assets/images/headshot.png`: Homepage portrait image
-- `public/site.webmanifest`: Web manifest
-- `public/favicon.ico`, `public/apple-touch-icon.png`, `public/safari-pinned-tab.svg`: root icon fallbacks
-- `dist/`: Astro output directory
-- `wrangler.toml`: Workers deployment/runtime config
-
-## Local development
-
-```bash
-npm install
+```sh
+npm ci
 npm run start
 ```
 
-Run through Cloudflare Workers runtime locally:
+The site uses typed Markdown and JSON collections. It has no client application code or server functions. The browser preference controls the light and dark themes.
 
-```bash
-npm run start:worker
-```
+## Source
 
-## Validation
+- `src/data/site.ts`: Identity, contact information, and navigation.
+- `src/content/initiatives/`: Work summaries.
+- `src/content/writing/`: Essays, with hidden dates for sorting and a draft filter.
+- `src/pages/`: Page templates and the custom 404 page.
+- `src/layouts/`: Shared metadata and article structure.
+- `src/styles/global.css`: Layout, palette, and responsive rules.
+- `src/assets/headshot.png`: Original portrait. Astro makes a smaller WebP during the build.
+- `public/`: Icons, manifest, robots file, and security headers.
+- `astro.config.mjs`: Static output, canonical origin, and sitemap integration.
+- `wrangler.toml`: Cloudflare static asset configuration.
 
-```bash
+Fontsource supplies local Inter and JetBrains Mono files. The portrait stays hidden on phone screens. The build does not publish its original PNG.
+
+## Build and E2E tests
+
+E2E tests operate the built site through browsers and the local Cloudflare runtime. They do not use isolated components or unit tests.
+
+```sh
 npm run check
 npm run build
+npx wrangler deploy --dry-run
+npx playwright install chromium webkit
+npm run test:e2e
 ```
 
-Generated output is written to `dist/`.
+The browser suite starts the local runtime. It covers all published pages, article links, contact links, keyboard focus, metadata, assets, response headers, and unknown addresses. It uses desktop, tablet, and phone screens with both themes. It also uses WebKit.
 
-## Cloudflare Workers Builds (Primary Deploy Path)
+The suite saves screenshots, accessibility results, network results, and build hashes. The default report is `playwright-report/index.html`. Read [the E2E plan](docs/e2e-plan.md) for the saved evidence and public test procedure.
 
-This repo is configured for **Git-based auto deploys through Cloudflare Workers Builds**.
+For public tests, build from the deployed source first. Set the public target with an environment variable:
 
-- Production branch: `main`
-- Build command: `npm run build`
-- Deploy command: `npx wrangler deploy`
-- Preview deploy command: `npx wrangler versions upload` (default)
+```sh
+E2E_BASE_URL=https://putnam-io.kylemputnam.workers.dev npm run test:e2e
+```
 
-### Guardrails
+Public asset hashes must match the local build. A successful page request alone does not establish that the deployment contains the current source.
 
-- Do not add GitHub Actions deploy workflows.
-- Do not create a second CI deploy path outside Cloudflare Workers Builds.
-- Standard release flow: push to `main`.
+## Deployment
 
-## Emergency Manual Deploy (Fallback Only)
+Cloudflare Workers Builds is the primary deployment path. It builds and deploys pushes to `main`. Keep this existing path. Do not add a second deployment pipeline or GitHub Actions deployment job.
 
-Use only if Cloudflare Workers Builds is unavailable:
+The build command is `npm run build`. The deployment command is `npx wrangler deploy`. The output directory is `dist/`. The pinned compatibility date remains unchanged.
 
-```bash
+The current Cloudflare address is <https://putnam-io.kylemputnam.workers.dev>. The intended canonical origin is `https://putnam.io`. On October 12, 2026, that domain still served the older WordPress site through Flywheel. A Worker release does not change the domain connection.
+
+If Workers Builds is unavailable, the emergency command is:
+
+```sh
 npm run deploy:manual
 ```
+
+Read [the audit](docs/audit-2026-10-12.md) for release results. Read [the design plan](docs/design-review-plan.md) for the next design review.

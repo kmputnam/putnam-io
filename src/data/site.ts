@@ -1,3 +1,6 @@
+import type { ImageMetadata } from "astro";
+import portrait from "../assets/headshot.png";
+
 export type NavItem = {
   label: string;
   href: string;
@@ -9,7 +12,7 @@ export type SiteData = {
   positioningLine: string;
   contactSentence: string;
   headshot: {
-    src: string;
+    src: ImageMetadata;
     alt: string;
   };
   contact: {
@@ -27,7 +30,7 @@ const site: SiteData = {
   contactSentence:
     "Open to conversations around product strategy, platform architecture, and system transformation.",
   headshot: {
-    src: "/assets/images/headshot.png",
+    src: portrait,
     alt: "Portrait of Kyle Putnam"
   },
   contact: {

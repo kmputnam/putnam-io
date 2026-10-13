@@ -42,7 +42,8 @@ This file captures the key context, decisions, and lessons learned while buildin
 - Writing post layout: `src/layouts/WritingPostLayout.astro`
 - Global CSS: `src/styles/global.css`
 - Navigation current-page state:
-  - Layout applies `.is-active` and `aria-current="page"` based on `Astro.url.pathname`.
+  - Layout applies `.is-active` based on `Astro.url.pathname`.
+  - Exact page links use `aria-current="page"`. Active parent sections use `aria-current="location"`.
   - CSS uses a subtle underline pseudo-element on active nav links.
 
 ## Theme Behavior
@@ -51,8 +52,10 @@ This file captures the key context, decisions, and lessons learned while buildin
 - Dark mode activates only via `@media (prefers-color-scheme: dark)`.
 
 ## Hero Image Behavior (Home Page)
-- Asset path in data: `site.headshot.src`
-- Current active image: `public/assets/images/headshot.png`
+- Image metadata in data: `site.headshot.src`
+- Original image: `src/assets/headshot.png`
+- Astro `getImage()` makes a 1520-pixel WebP image during the build.
+- The original PNG is outside `public/` and is not deployed.
 - Implementation: image rendered as a background layer (`.hero-bg`) behind hero copy.
 - Responsive behavior:
   - Desktop: full figure visible, right-aligned.
@@ -93,12 +96,16 @@ Collections:
 - `initiatives`: JSON entries with `title`, `meta`, `scope`, `bullets` (max 3), `order`
 
 ## Local Dev Commands
-- Install: `npm install`
+- Use Node.js `24.18.0`, as pinned in `.node-version`.
+- Install: `npm ci`
 - Type/content check: `npm run check`
 - Build: `npm run build`
 - Serve/watch: `npm run start`
 - Serve via Workers runtime: `npm run start:worker`
 - Emergency-only manual deploy: `npm run deploy:manual`
+- Browser tests: `npm run test:e2e`
+- Public browser tests: `E2E_BASE_URL=https://putnam-io.kylemputnam.workers.dev npm run test:e2e`
+- Read `docs/e2e-plan.md` for browser installation, reports, and repeatable evidence.
 
 Notes:
 - Dev server port may auto-shift if busy (`8080`, `8081`, etc.).
@@ -112,12 +119,27 @@ Configuration lives in `wrangler.toml`:
 - `[assets].directory = "./dist"` to serve Astro output
 - `html_handling = "auto-trailing-slash"` for friendly page routes
 - `not_found_handling = "404-page"` for true multi-page 404 behavior
+- Production address: `https://putnam-io.kylemputnam.workers.dev`
+- The intended canonical domain remains `https://putnam.io`.
+- On October 12, 2026, `putnam.io` still served the old WordPress site through Flywheel.
+- Do not treat a successful Worker deployment as proof that the canonical domain serves Astro.
 
 ### Deploy Pipeline Policy (Important)
 - Primary deploy path is Cloudflare Workers Builds from git pushes to `main`.
 - Do not add `.github/workflows/*` deploy jobs.
 - Do not introduce a second auto-deploy pipeline outside Cloudflare Workers Builds.
 - `npm run deploy:manual` is fallback-only.
+
+## Build and Audit Rules
+- Keep dependencies and generated files out of Git. Use `package-lock.json` for installation.
+- Local Fontsource files supply Inter and JetBrains Mono. Do not restore external Google Fonts requests.
+- Keep canonical and social metadata in `BaseLayout.astro`.
+- Page templates supply descriptions. Writing descriptions use the article deck.
+- The sitemap integration includes published pages. It excludes the custom 404 page.
+- `public/robots.txt` identifies the sitemap. `public/_headers` defines response security headers.
+- `src/pages/404.astro` supplies the page for unknown addresses.
+- Use E2E browser tests through the Cloudflare runtime. Do not add unit tests after implementation.
+- Save reports, screenshots, build hashes, and the tested source revision after E2E tests.
 
 ## Known Gotchas and Fixes
 - `site.webmanifest` 404:

@@ -9,7 +9,7 @@ interface Props {
 const { title, deck } = Astro.props as Props;
 ---
 
-<BaseLayout title={title}>
+<BaseLayout title={title} description={deck} type="article">
   <article aria-labelledby="writing-post-title">
     <section class="page-heading">
       <p class="section-label">Writing</p>
